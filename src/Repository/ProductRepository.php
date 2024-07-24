@@ -26,6 +26,17 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[] Returns an array of Product objects
      */
+    public function findAllSorted(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
     public function findActive(): array
     {
         return $this->createQueryBuilder('p')

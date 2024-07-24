@@ -1,10 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ product.name }}<br>
-    {{ product.description }}<br>
-    {{ product.price }}<br>
-    {{ product.active }}<br>
-    <img src="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}"><br>
-    <a href="{{ path('product_list') }}">List</a>
+    <!-- About Start -->
+    <div class="container-fluid bg-light about py-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+                    <div class="about-item-content bg-white rounded p-5 h-100">
+{#                        <h4 class="text-primary">About Our Company</h4>#}
+                        <h1 class="display-4 mb-4">{{ product.name }}</h1>
+                        <p>{{ product.description }}</p>
+                        <p class="text-dark">Price: {{ product.price }}</p>
+                        <p>Status: {{ product.active?'Active':'Inactive' }}</p>
+                    </div>
+                </div>
+                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
+                    <div class="bg-white rounded p-5 h-100">
+                        <img src="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}" alt="Not Available">
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ path('product_list') }}">Return to list</a>
+        </div>
+    </div>
+    <!-- About End -->
 {% endblock %}

@@ -68,7 +68,7 @@
                     <a href="about.html" class="nav-item nav-link">About</a>
                     <a href="service.html" class="nav-item nav-link">Services</a>
                     {% if is_granted('ROLE_SELLER') %}
-                        <a href="blog.html" class="nav-item nav-link">Orders</a>
+                        <a href="{{ path('order_list') }}" class="nav-item nav-link">Orders</a>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <div class="nav-item dropdown">

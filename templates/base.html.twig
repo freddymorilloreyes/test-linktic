@@ -17,7 +17,9 @@
 </head>
 <body>
 <div class="container-fluid">
-    {% include 'menu.html.twig'%}
+    <div class="pb-5">
+        {% include 'menu.html.twig' %}
+    </div>
     {% block body %}{% endblock %}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

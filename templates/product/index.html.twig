@@ -1,18 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block title %}Product List{% endblock %}
 
 {% block body %}
-    <div class="">
-        <table class="table">
+    <div class="container">
+        <div class="row">
+            <div class="align-content-end">
+                <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ path('product_new') }}">Add</a>
+            </div>
+        </div>
+        <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Descricion</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Category</th>
+                <th scope="col">Active</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -22,24 +27,24 @@
                     <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
                     <td>{{ product.category.name }}</td>
-                    <td>{{ product.active?'Activo':'Inactivo' }}</td>
+                    <td>{{ product.active?'Yes':'No' }}</td>
                     <td>
-                        {#                        <div class="dropdown"> #}
-                        {#                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" #}
-                        {#                                    aria-expanded="false"> #}
-                        {#                                Acciones #}
-                        {#                            </button> #}
-                        {#                            <ul class="dropdown-menu"> #}
-                        <ul>
-                            <li><a class="dropdown-item"
-                                   href="{{ path('product_details',{'id':product.id}) }}">Detalles</a></li>
-                            <li><a class="dropdown-item" href="{{ path('product_edit',{'id':product.id}) }}">Editar</a>
-                            </li>
-                            <li><a class="dropdown-item"
-                                   href="{{ path('product_change_status',{'id':product.id}) }}">{{ product.active?'Inactivar':'Activar' }}</a>
-                            </li>
-                        </ul>
-                        {#                        </div> #}
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                       href="{{ path('product_details',{'id':product.id}) }}">Details</a></li>
+                                <li><a class="dropdown-item"
+                                       href="{{ path('product_edit',{'id':product.id}) }}">Edit</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                       href="{{ path('product_change_status',{'id':product.id}) }}">{{ product.active?'Inactive':'Active' }}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

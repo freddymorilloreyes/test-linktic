@@ -1,5 +1,6 @@
-{%  extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block title %}New Product{% endblock %}
 {% block body %}
-{{ form(form) }}
-<a href="{{ path('product_list') }}">List</a>
+    {% include 'product/form.html.twig' %}
+    <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ path('product_list') }}">Return to list</a>
 {% endblock %}

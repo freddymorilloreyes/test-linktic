@@ -21,7 +21,7 @@ class ProductController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findAllSorted(),
         ]);
     }
 
@@ -64,8 +64,9 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('product_list');
         }
 
-        return $this->render('product/new.html.twig', [
+        return $this->render('product/edit.html.twig', [
             'form' => $form,
+            'product' => $product
         ]);
     }
 

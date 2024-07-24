@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit Product{% endblock %}
+{% block body %}
+    {% include 'product/form.html.twig' %}
+    <div class="bg-white rounded p-5 h-100">
+        <p>Current Image</p>
+        <img src="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}" alt="Not Available">
+    </div>
+    <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ path('product_list') }}">Return to list</a>
+{% endblock %}

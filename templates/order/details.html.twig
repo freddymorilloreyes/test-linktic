@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Client Details
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Name: {{ order.client.nickname }}</h5>
+                <p class="card-text">Email: {{ order.client.email }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="align-content-end">
+                Items
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in order.orderItems %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.description }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.price * item.quantity }}</td>
+                    {#                    <td>{{ item.product.active?'Yes':'No' }}</td> #}
+                    {#                <td> #}
+                    {#                    <div class="dropdown"> #}
+                    {#                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" #}
+                    {#                                aria-expanded="false"> #}
+                    {#                            Actions #}
+                    {#                        </button> #}
+                    {#                        <ul class="dropdown-menu"> #}
+                    {#                            <li><a class="dropdown-item" #}
+                    {#                                   href="{{ path('product_details',{'id':product.id}) }}">Details</a></li> #}
+                    {#                            <li><a class="dropdown-item" #}
+                    {#                                   href="{{ path('product_edit',{'id':product.id}) }}">Edit</a> #}
+                    {#                            </li> #}
+                    {#                            <li><a class="dropdown-item" #}
+                    {#                                   href="{{ path('product_change_status',{'id':product.id}) }}">{{ product.active?'Inactive':'Active' }}</a> #}
+                    {#                            </li> #}
+                    {#                        </ul> #}
+                    {#                    </div> #}
+                    {#                </td> #}
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <td colspan="4" content="left">
+                Total:
+            </td>
+            <td colspan="1">
+                {{ order.totalCost }}
+            </td>
+            </tfoot>
+        </table>
+    </div>
+
+    <!-- About Start -->
+    {#    <div class="container-fluid bg-light about py-5"> #}
+    {#        <div class="container py-5"> #}
+    {#            <div class="row g-5"> #}
+    {#                <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s"> #}
+    {#                    <div class="about-item-content bg-white rounded p-5 h-100"> #}
+    {#                        <h4 class="text-primary">About Our Company</h4> #}
+    {#                        <h1 class="display-4 mb-4">{{ product.name }}</h1> #}
+    {#                        <p>{{ product.description }}</p> #}
+    {#                        <p class="text-dark">Price: {{ product.price }}</p> #}
+    {#                        <p>Status: {{ product.active?'Active':'Inactive' }}</p> #}
+    {#                    </div> #}
+    {#                </div> #}
+    {#                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s"> #}
+    {#                    <div class="bg-white rounded p-5 h-100"> #}
+    {#                        <img src="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}" alt="Not Available"> #}
+    {#                    </div> #}
+    {#                </div> #}
+    {#            </div> #}
+    {#            <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ path('product_list') }}">Return to list</a> #}
+    {#        </div> #}
+    {#    </div> #}
+    <!-- About End -->
+{% endblock %}
