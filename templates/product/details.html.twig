@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ product.name }}<br>
+    {{ product.description }}<br>
+    {{ product.price }}<br>
+    {{ product.active }}<br>
+    <img src="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}"><br>
+    <a href="{{ path('product_list') }}">List</a>
+{% endblock %}

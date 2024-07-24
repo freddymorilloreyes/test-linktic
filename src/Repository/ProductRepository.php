@@ -15,32 +15,25 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
-    public function save(Product $supplier, bool $andFlush = true): void
+
+    public function save(Product $supplier, bool $andFlush = false): void
     {
         $em = $this->getEntityManager();
         $em->persist($supplier);
         $andFlush && $em->flush();
     }
-    public function remove(Product $supplier, bool $andFlush = true): void
+
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findActive(): array
     {
-        $em = $this->getEntityManager();
-        $em->remove($supplier);
-        $andFlush && $em->flush();
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.active = 1')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
-    //    /**
-    //     * @return Product[] Returns an array of Product objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
     //    public function findOneBySomeField($value): ?Product
     //    {

@@ -3,65 +3,74 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Form\ProductType;
 use App\Repository\ProductRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Product\UseCase\CreateUpdateProductUseCase;
+use App\Service\Product\UseCase\ToggleStatusProductUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/product', name: 'product_')]
 class ProductController extends AbstractController
 {
     #[Route('/', name: 'list')]
-    public function index(): Response
+    public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
-            'controller_name' => 'ProductController',
+            'products' => $productRepository->findAll(),
         ]);
     }
 
     #[Route('/details/{id}', name: 'details')]
     public function show(Product $product): Response
     {
-
-        return new Response('Check out this great product: '.$product->getName());
-
-        // or render a template
-        // in the template, print things with {{ product.name }}
-        // return $this->render('product/show.html.twig', ['product' => $product]);
+        return $this->render('product/details.html.twig', [
+            'product' => $product,
+        ]);
     }
 
-    #[Route('/new', name: 'create_')]
-    public function createProduct(EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
+    #[Route('/new', name: 'new')]
+    public function new(Request $request, CreateUpdateProductUseCase $useCase): Response
     {
+
         $product = new Product();
-        $product->setName('Keyboard');
-        $product->setPrice(1999);
-        $product->setDescription('Ergonomic and stylish!');
 
-        // tell Doctrine you want to (eventually) save the Product (no queries yet)
-        $errors = $validator->validate($product);
+        $form = $this->createForm(ProductType::class, $product);
 
-        if (count($errors) > 0) {
-            return new Response((string) $errors, 400);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $useCase->handle($form);
+            return $this->redirectToRoute('product_list');
         }
-        $entityManager->persist($product);
-        // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
 
-        return new Response('Saved new product with id '.$product->getId());
+        return $this->render('product/new.html.twig', [
+            'form' => $form,
+        ]);
     }
 
     #[Route('/edit/{id}', name: 'edit')]
-    public function update(Product $product, ProductRepository $repository): Response
+    public function update(Product $product, Request $request, CreateUpdateProductUseCase $useCase): Response
     {
 
-        $product->setName('New product name!');
-        $repository->save($product);
+        $form = $this->createForm(ProductType::class, $product);
 
-        return $this->redirectToRoute('product_details', [
-            'id' => $product->getId()
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $useCase->handle($form);
+            return $this->redirectToRoute('product_list');
+        }
+
+        return $this->render('product/new.html.twig', [
+            'form' => $form,
         ]);
+    }
+
+    #[Route('/change/status/{id}', name: 'change_status')]
+    public function changeStatus(Product $product, Request $request, ToggleStatusProductUseCase $useCase): Response
+    {
+        $useCase->handle($product);
+        return $this->redirectToRoute('product_list');
     }
 }
