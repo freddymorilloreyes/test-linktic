@@ -11,8 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/product', name: 'product_')]
+#[IsGranted('ROLE_ADMIN')]
+#[Route('/admin/product', name: 'product_')]
 class ProductController extends AbstractController
 {
     #[Route('/', name: 'list')]

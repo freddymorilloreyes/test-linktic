@@ -1,0 +1,100 @@
+{# <nav class="navbar bg-body-tertiary fixed-top"> #}
+{#    <div class="container-fluid"> #}
+{#        <a class="navbar-brand" href="{{ path('home') }}">Prueba para linktic</a> #}
+{#        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" #}
+{#                aria-controls="offcanvasNavbar" aria-label="Toggle navigation"> #}
+{#            <span class="navbar-toggler-icon"></span> #}
+{#        </button> #}
+{#        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" #}
+{#             aria-labelledby="offcanvasNavbarLabel"> #}
+{#            <div class="offcanvas-header"> #}
+{#                <h5 class="offcanvas-title" id="offcanvasNavbarLabel"> #}
+{#                    {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+{#                        <p>{{ app.user.nickname }}</p> #}
+{#                    {% endif %} #}
+{#                </h5> #}
+{#                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> #}
+{#            </div> #}
+{#            <div class="offcanvas-body"> #}
+{#                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3"> #}
+{#                    <li class="nav-item"> #}
+{#                        <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a> #}
+{#                    </li> #}
+{#                    {% if is_granted('ROLE_ADMIN') %} #}
+{#                        <li class="nav-item"> #}
+{#                            <a class="nav-link" href="{{ path('product_list') }}">Products</a> #}
+{#                        </li> #}
+{#                    {% endif %} #}
+{#                    <li class="nav-item"> #}
+{#                        <a class="nav-link" href="#">Link</a> #}
+{#                    </li> #}
+{#                    <li class="nav-item"> #}
+{#                        <a class="nav-link" #}
+{#                           href="{{ path(is_granted('IS_AUTHENTICATED_FULLY')?'app_logout':'app_login') }}">{{ is_granted('IS_AUTHENTICATED_FULLY')?'Cerrar sesion':'Iniciar Sesion' }}</a> #}
+{#                    </li> #}
+{#                    <li class="nav-item dropdown"> #}
+{#                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" #}
+{#                           aria-expanded="false"> #}
+{#                            Dropdown #}
+{#                        </a> #}
+{#                        <ul class="dropdown-menu"> #}
+{#                            <li><a class="dropdown-item" href="#">Action</a></li> #}
+{#                            <li><a class="dropdown-item" href="#">Another action</a></li> #}
+{#                            <li> #}
+{#                                <hr class="dropdown-divider"> #}
+{#                            </li> #}
+{#                            <li><a class="dropdown-item" href="#">Something else here</a></li> #}
+{#                        </ul> #}
+{#                    </li> #}
+{#                </ul> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </nav> #}
+
+<!-- Navbar & Hero Start -->
+<div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a href="{{ path('home') }}" class="navbar-brand p-0">
+                <h1 class="text-primary mb-0">Linktic test</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav mx-0 mx-lg-auto">
+                    <a href="{{ path('home') }}" class="nav-item nav-link active">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="service.html" class="nav-item nav-link">Services</a>
+                    {% if is_granted('ROLE_SELLER') %}
+                        <a href="blog.html" class="nav-item nav-link">Orders</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-bs-toggle="dropdown">
+                                <span class="dropdown-toggle">Admin</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="{{ path('product_list') }}" class="dropdown-item">Products</a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+            </div>
+            <div class="d-none d-xl-flex flex-shrink-0 ps-4">
+                <div class="d-flex flex-column ms-3">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <span>{{ app.user.nickname }}</span>
+                        <a href="{{ path('app_logout') }}"><span class="text-dark">Logout</span></a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}"><span class="text-dark">Login</span></a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar & Hero End -->
