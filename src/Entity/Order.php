@@ -16,7 +16,7 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 1, nullable: false, enumType: OrderStatus::class)]
+    #[ORM\Column(type: 'string', length: 10, nullable: false, enumType: OrderStatus::class)]
     private OrderStatus $status;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
@@ -47,6 +47,21 @@ class Order
     public function setStatus(OrderStatus $status): void
     {
         $this->status = $status;
+    }
+
+    public function setInProcess(): void
+    {
+        $this->setStatus(OrderStatus::InProcess);
+    }
+
+    public function setCompleted(): void
+    {
+        $this->setStatus(OrderStatus::Completed);
+    }
+
+    public function setRejected(): void
+    {
+        $this->setStatus(OrderStatus::Rejected);
     }
 
     public function getClient(): ?User

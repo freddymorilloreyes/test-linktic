@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderStatus;
 use App\Repository\OrderRepository;
+use App\Service\Order\UseCase\ChangeStatusUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,11 +30,11 @@ class OrderController extends AbstractController
             'order' => $order,
         ]);
     }
-//
-//    #[Route('/change/status/{id}', name: 'change_status')]
-//    public function changeStatus(Product $product, Request $request, ToggleStatusProductUseCase $useCase): Response
-//    {
-//        $useCase->handle($product);
-//        return $this->redirectToRoute('product_list');
-//    }
+
+    #[Route('/change/status/{id}/{status}', name: 'change_status')]
+    public function changeStatus(Order $order, OrderStatus $status, ChangeStatusUseCase $useCase): Response
+    {
+        $useCase->handle($order, $status);
+        return $this->redirectToRoute('order_details', ['id' => $order->getId()]);
+    }
 }

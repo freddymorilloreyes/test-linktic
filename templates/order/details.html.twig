@@ -34,25 +34,6 @@
                     <td>{{ item.product.price }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.product.price * item.quantity }}</td>
-                    {#                    <td>{{ item.product.active?'Yes':'No' }}</td> #}
-                    {#                <td> #}
-                    {#                    <div class="dropdown"> #}
-                    {#                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" #}
-                    {#                                aria-expanded="false"> #}
-                    {#                            Actions #}
-                    {#                        </button> #}
-                    {#                        <ul class="dropdown-menu"> #}
-                    {#                            <li><a class="dropdown-item" #}
-                    {#                                   href="{{ path('product_details',{'id':product.id}) }}">Details</a></li> #}
-                    {#                            <li><a class="dropdown-item" #}
-                    {#                                   href="{{ path('product_edit',{'id':product.id}) }}">Edit</a> #}
-                    {#                            </li> #}
-                    {#                            <li><a class="dropdown-item" #}
-                    {#                                   href="{{ path('product_change_status',{'id':product.id}) }}">{{ product.active?'Inactive':'Active' }}</a> #}
-                    {#                            </li> #}
-                    {#                        </ul> #}
-                    {#                    </div> #}
-                    {#                </td> #}
                 </tr>
             {% endfor %}
             </tbody>
@@ -65,29 +46,24 @@
             </td>
             </tfoot>
         </table>
+        <div class="card">
+            <div class="card-header">
+                Status
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Status: {{ order.status.label }}</h5>
+                {% if order.status.requested %}
+                    <a type="button" class="btn btn-primary"
+                       href="{{ path('order_change_status',{id:order.id,status:constant('App\\Entity\\OrderStatus::InProcess').value}) }}">Change
+                        to In Process</a>
+                {% elseif order.status.inProcess %}
+                    <a type="button" class="btn btn-success"
+                       href="{{ path('order_change_status',{id:order.id,status:constant('App\\Entity\\OrderStatus::Completed').value}) }}">Mark
+                        as Completed</a>
+                    <a type="button" class="btn btn-danger"
+                       href="{{ path('order_change_status',{id:order.id,status:constant('App\\Entity\\OrderStatus::Rejected').value}) }}">Cancel</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
-
-    <!-- About Start -->
-    {#    <div class="container-fluid bg-light about py-5"> #}
-    {#        <div class="container py-5"> #}
-    {#            <div class="row g-5"> #}
-    {#                <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s"> #}
-    {#                    <div class="about-item-content bg-white rounded p-5 h-100"> #}
-    {#                        <h4 class="text-primary">About Our Company</h4> #}
-    {#                        <h1 class="display-4 mb-4">{{ product.name }}</h1> #}
-    {#                        <p>{{ product.description }}</p> #}
-    {#                        <p class="text-dark">Price: {{ product.price }}</p> #}
-    {#                        <p>Status: {{ product.active?'Active':'Inactive' }}</p> #}
-    {#                    </div> #}
-    {#                </div> #}
-    {#                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s"> #}
-    {#                    <div class="bg-white rounded p-5 h-100"> #}
-    {#                        <img src="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}" alt="Not Available"> #}
-    {#                    </div> #}
-    {#                </div> #}
-    {#            </div> #}
-    {#            <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ path('product_list') }}">Return to list</a> #}
-    {#        </div> #}
-    {#    </div> #}
-    <!-- About End -->
 {% endblock %}
